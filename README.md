@@ -5,5 +5,5 @@ A restful API that accepts URL and CSS Selector, proccesses the input to a puppe
 # Install
 npm i puppeteer chalk express bodyParser
  
- #Run
+ # Run
  node easy.js or nodemon easy.js
