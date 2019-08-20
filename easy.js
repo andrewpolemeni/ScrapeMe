@@ -4,6 +4,7 @@ const express = require("express");
 const path = require('path');
 const bodyParser = require('body-parser');
 const http = require('http');
+const cors = require('cors');
 
 // Create pretty console log messages for debugging
 const error = chalk.bold.red;
@@ -16,6 +17,7 @@ const port = 3000;
 app.set('view engine', 'html');
 app.engine('html', require('ejs').renderFile);
 app.use(express.static(__dirname + '../'));
+app.use(cors());
 
 // use body parser to easy fetch post body
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -26,15 +28,16 @@ app.get('/', function(req, res) {
 });
 
 //route that receives the post body and returns your computation
-app.post('/api/selector', function sendScrapyParams(req, res, next) {
+app.post('/api/selector', async function sendScrapyParams(req, res, next) {
     // res.render(__dirname + '/index.html');
     const myData = {
         URL_1: req.body.param1,
         selector: req.body.param2
     };
-    res.json(myData);
-    console.log(success(myData["URL_1"]));
-    console.log(success(myData["selector"]));
+    const result = await scrappyFunction(myData);
+    res.json( { result, URL: myData.URL_1 });
+    // console.log(success(myData["URL_1"]));
+    // console.log(success(myData["selector"]));
     module.exports.myData = myData;
 });
 
@@ -42,18 +45,20 @@ app.post('/api/selector', function sendScrapyParams(req, res, next) {
 app.listen(port, () => console.log(chalk.blue(`This app is listening on port ${port}`, '\n')));
 
 // Here is where puppeteer starts
-(async () => {
+const scrappyFunction = async (myData) => {
     try {
         
+
         const browser = await puppeteer.launch({headless: false});
         // open a new page
         const page = await browser.newPage();
         //enter url in page
-        await page.waitForRequest('api/selector', {waitUtil: 'domcontentloaded'});
-        await page.goto(this.myData["URL_1"], {waitUtil: 'domcontentloaded'});
+        // await page.waitForRequest('api/selector', {waitUtil: 'domcontentloaded'});
         
-        console.log(this.myData["URL_1"]);
-        console.log(this.myData["selector"]);
+        await page.goto(myData["URL_1"], {waitUtil: 'domcontentloaded'});
+        
+        // console.log(myData["URL_1"]);
+        // console.log(myData["selector"]);
 
         // set the page size
         await page.setViewport({
@@ -62,23 +67,24 @@ app.listen(port, () => console.log(chalk.blue(`This app is listening on port ${p
         });
 
         // go to the bookstore and take a picture
-        await page.screenshot({ path: "1.png"});
+        // await page.screenshot({ path: "1.png"});
+        console.log("evaluating " + myData.URL_1);
 
-        const result = await page.evaluate(() => {
-            let selectorCSS = document.querySelector(this.myData["selector"]).innerText;
+        const result = await page.evaluate((myData) => {
+            console.log(JSON.stringify(myData));
+            let selectorCSS = document.querySelector(myData["selector"]).innerText;
+            console.log(selectorCSS);
 
-            return {
-                selectorCSS
-            }
-        });
+            return selectorCSS
+        }, myData);
+
         await browser.close();
-        console.log(result + '\n');
+        console.log(JSON.stringify(result));
         console.log(success("Got Data Hooray! 🎉 🎉 🎉 \n"));
         return result;    
 
     }   catch (err){
         console.log(error(err));
-        await browser.close();
         console.log(error("Aw Snap, somethings not working correctly 💩 💩 💩 \n"));
     }
-})();
+};
