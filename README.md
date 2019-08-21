@@ -10,3 +10,7 @@ npm install
 
 
 ![UI Example](https://raw.githubusercontent.com/andrewpolemeni/ScrapeMe/master/DemoExample/UI%20Example.JPG)
+
+How to get CSS Selector
+
+![UI Example](https://github.com/andrewpolemeni/ScrapeMe/blob/master/DemoExample/selector.gif?raw=true)
