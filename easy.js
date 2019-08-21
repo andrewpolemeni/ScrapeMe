@@ -29,15 +29,14 @@ app.get('/', function(req, res) {
 
 //route that receives the post body and returns your computation
 app.post('/api/selector', async function sendScrapyParams(req, res, next) {
-    // res.render(__dirname + '/index.html');
+
     const myData = {
         URL_1: req.body.param1,
         selector: req.body.param2
     };
+
     const result = await scrappyFunction(myData);
     res.json( { result, URL: myData.URL_1 });
-    // console.log(success(myData["URL_1"]));
-    // console.log(success(myData["selector"]));
     module.exports.myData = myData;
 });
 
@@ -47,9 +46,8 @@ app.listen(port, () => console.log(chalk.blue(`This app is listening on port ${p
 // Here is where puppeteer starts
 const scrappyFunction = async (myData) => {
     try {
-        
 
-        const browser = await puppeteer.launch({headless: false});
+        const browser = await puppeteer.launch({headless: true});
         // open a new page
         const page = await browser.newPage();
         //enter url in page
@@ -66,16 +64,16 @@ const scrappyFunction = async (myData) => {
             height: 1200
         });
 
-        // go to the bookstore and take a picture
-        // await page.screenshot({ path: "1.png"});
         console.log("evaluating " + myData.URL_1);
 
         const result = await page.evaluate((myData) => {
             console.log(JSON.stringify(myData));
+
             let selectorCSS = document.querySelector(myData["selector"]).innerText;
             console.log(selectorCSS);
 
-            return selectorCSS
+            return selectorCSS;
+
         }, myData);
 
         await browser.close();
