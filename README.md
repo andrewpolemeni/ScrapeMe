@@ -9,4 +9,4 @@ npm install
  node easy.js or nodemon easy.js
 
 
-![UI Example](DemoExample\UI Example.JPG)
+![UI Example](https://raw.githubusercontent.com/andrewpolemeni/ScrapeMe/master/DemoExample/UI%20Example.JPG)
