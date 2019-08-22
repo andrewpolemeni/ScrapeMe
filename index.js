@@ -48,7 +48,7 @@ const scrappyFunction = async (myData) => {
     try {
 
         const browser = await puppeteer.launch({
-            // headless: true, // browser runs headless locally 
+            headless: true, // browser runs headless
             args: [
                 '--no-sandbox', // So puppeteer can run on heroku
                 '--disable-setuid-sandbox',
