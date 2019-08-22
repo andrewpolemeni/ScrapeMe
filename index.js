@@ -3,8 +3,8 @@ const chalk = require("chalk");
 const express = require("express");
 const path = require('path');
 const bodyParser = require('body-parser');
-const http = require('http');
 const cors = require('cors');
+// const http = require('http');
 
 // Create pretty console log messages for debugging
 const error = chalk.bold.red;
@@ -12,7 +12,7 @@ const success = chalk.keyword("green");
 
 // Express app
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 5000;
 
 app.set('view engine', 'html');
 app.engine('html', require('ejs').renderFile);

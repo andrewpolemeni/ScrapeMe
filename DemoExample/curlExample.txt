@@ -1,0 +1,1 @@
+curl -X POST -d '{ "param1": "http://securityfirstmanagers.hrmdirect.com/employment/job-openings.php?search=true&", "param2": "body > div > table > tbody > tr.bottom > td.mainpane > div.careersTitle"}' \ "https://scrapeme.firebaseapp.com"
