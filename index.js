@@ -47,7 +47,13 @@ app.listen(port, () => console.log(chalk.blue(`This app is listening on port ${p
 const scrappyFunction = async (myData) => {
     try {
 
-        const browser = await puppeteer.launch({headless: true});
+        const browser = await puppeteer.launch({
+            headless: true,
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+            ],
+        });
         // open a new page
         const page = await browser.newPage();
         //enter url in page

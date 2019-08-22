@@ -1,7 +1,9 @@
 node_modules
+# for heroku
 npm-debug.log
 .DS_Store
 /*.env
+# for firebase
 public
 .firebaserc
 firebase.json
