@@ -52,6 +52,10 @@ const scrappyFunction = async (myData) => {
             args: [
                 '--no-sandbox', // So puppeteer can run on heroku
                 '--disable-setuid-sandbox',
+                '--disable-gpu',
+                '--disable-dev-shm-usage',
+                '--proxy-server="direct://"',
+                '--proxy-bypass-list=*'
             ],
         });
         // open a new page
