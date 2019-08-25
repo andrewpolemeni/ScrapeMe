@@ -45,19 +45,19 @@ app.listen(port, () => console.log(chalk.blue(`This app is listening on port ${p
 
 // Here is where puppeteer starts
 const scrappyFunction = async (myData) => {
+    // initialize browser before try block in for error handing
+    const browser = await puppeteer.launch({
+        headless: true, // browser runs headless
+        args: [
+            '--no-sandbox', // So puppeteer can run on heroku
+            '--disable-setuid-sandbox',
+            '--disable-gpu',
+            '--disable-dev-shm-usage',
+            '--proxy-server="direct://"',
+            '--proxy-bypass-list=*'
+        ],
+    });
     try {
-
-        const browser = await puppeteer.launch({
-            headless: true, // browser runs headless
-            args: [
-                '--no-sandbox', // So puppeteer can run on heroku
-                '--disable-setuid-sandbox',
-                '--disable-gpu',
-                '--disable-dev-shm-usage',
-                '--proxy-server="direct://"',
-                '--proxy-bypass-list=*'
-            ],
-        });
         // open a new page
         const page = await browser.newPage();
         //enter url in page
@@ -92,6 +92,7 @@ const scrappyFunction = async (myData) => {
         return result;    
 
     }   catch (err){
+        await browser.close();
         console.log(error(err));
         console.log(error("Aw Snap, somethings not working correctly 💩 💩 💩 \n"));
     }
