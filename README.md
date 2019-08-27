@@ -2,9 +2,7 @@
 A work in Progress: 
 A restful API that accepts URL and CSS Selector, proccesses the input to a puppeteer function, and post to JSON.
 
-Currently not working link to example: https://scrapeme.firebaseapp.com/
-Firebase will not post since default is index.html.
-A front end interface would help with fetching the data on POST.
+Here is a test link to a heroku app: https://stark-hollows-84026.herokuapp.com/
 
 # Install
 npm install
