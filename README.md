@@ -2,7 +2,8 @@
 A work in Progress: 
 A restful API that accepts URL and CSS Selector, proccesses the input to a puppeteer function, and post to JSON.
 
-Here is a test link to a heroku app: https://stark-hollows-84026.herokuapp.com/
+Here is a test link to a heroku app but it currently breaks after the first two tries: https://stark-hollows-84026.herokuapp.com/
+I'm porting this over to a cloud function since this is ram intensive.
 
 # Install
 npm install
