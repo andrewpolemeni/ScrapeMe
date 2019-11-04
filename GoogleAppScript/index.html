@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <base target="_top">
+
+    <!-- Load the jQuery library from the Google CDN -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+
+    <!-- Use this CSS stylesheet to ensure that add-ons styling matches the default Google Sheets styles -->
+    <link href="https://ssl.gstatic.com/docs/script/css/add-ons.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <!-- The sidebar will have a input box and the search button -->
+    <div class="sidebar">
+
+        <!-- Input Section-->
+        <form id="formData" class="block form-group">
+
+            <!-- Input URL -->
+            <p>1) To Select the item go to the web site in a different browser window or tab. Copy the URL from the URL bar and paste it into “Enter URL”</p>
+            <input type="text" id="requestURL" name="requestURL" placeholder="Enter URL" title="Enter URL link to website you want to scrape data from." />
+            <br>
+
+            <!-- Input Selector -->
+            <p>2) Input CSS Selector</p>
+            <input type="text" id="selector" name="selector" placeholder="Enter Selector" title="The Selector allows you to Select and Scrape an single item from a web site." /><br><br>
+
+
+            <!-- submit form data -->
+            <button class="blue" id="sendData" name="sendData">Submit</button>
+            
+        </form>
+
+        <br>
+        <div id="displayData">{ Data: Data Goes Here }</div>
+
+        <!-- Instructions -->
+        <p>The Selector allows you to Select and Scrape an single item from a web site.</p>
+        <p>On the web site right click on the item and...</p>
+
+        <script>
+            alert("Please log in")
+        </script>
+
+        <!-- put data in current cell -->
+        <div>
+            <button class="blue" id="set_in_active_cell">Set Data in Cell</button>
+        </div>
+    </div>
+</body>
+
+<script>
+
+ 
+</script>
+<!-------------------------------------------------- CODE ----------------------------------------->
+<script>
+var sendDataButton = document.getElementById("sendData");
+
+var requestURLInput = document.getElementById("requestURL");
+var selectorInput = document.getElementById("selector");
+
+sendDataButton.addEventListener("click",sendData);
+
+
+function sendData() {
+
+ var myData = {};
+ 
+ myData.URL = requestURLInput.value;
+ myData.selector = selectorInput.value;
+
+ google.script.run.sendData(myData.URL, myData.selector);
+
+}
+
+</script>
+</html>
